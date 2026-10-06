@@ -551,10 +551,26 @@ header {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    width: 100%;
     padding: 12px 14px;
     border-radius: 18px;
     background: linear-gradient(180deg, #fffdfd, #fff2f7);
     border: 1px solid rgba(243, 193, 216, 0.85);
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.reward-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(218, 124, 174, 0.1);
+}
+
+.reward-item:disabled {
+    cursor: default;
+    opacity: 0.9;
 }
 
 .reward-item.reward-earned {
@@ -624,6 +640,163 @@ header {
     color: var(--muted);
     font-size: 13px;
     line-height: 1.5;
+}
+
+.tag-mini {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(245, 194, 214, 0.18);
+    border: 1px solid rgba(236, 163, 195, 0.7);
+    color: var(--pink-dark);
+    border-radius: 999px;
+    padding: 7px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.4px;
+}
+
+.focus-grid,
+.game-grid,
+.calc-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.focus-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.game-grid,
+.calc-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.focus-card,
+.game-card,
+.calc-card {
+    background: linear-gradient(180deg, #fffdfd, #fff3f8);
+    border: 1px solid rgba(242, 194, 216, 0.9);
+    border-radius: 24px;
+    padding: 18px;
+    box-shadow: var(--shadow-soft);
+}
+
+.focus-card h3,
+.game-card h3,
+.calc-card h3 {
+    margin: 0 0 10px;
+    color: var(--pink-dark);
+    font-size: 24px;
+    font-family: Georgia, serif;
+}
+
+.focus-card p,
+.game-card p,
+.calc-card p {
+    margin: 0 0 12px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.focus-row,
+.focus-actions,
+.calc-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.focus-btn,
+.calc-btn,
+.game-btn {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f7d8e8, #f0b9d1);
+    color: var(--pink-dark);
+    cursor: pointer;
+    transition: transform 0.18s ease;
+}
+
+.focus-btn:hover,
+.calc-btn:hover,
+.game-btn:hover {
+    transform: translateY(-1px);
+}
+
+.focus-timer {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(236, 177, 206, 0.16);
+    color: var(--pink-dark);
+    font-weight: bold;
+}
+
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(54px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.memory-card {
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ffdfe9, #f5c8dc);
+    color: var(--pink-dark);
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: inset 0 -4px 10px rgba(190, 88, 130, 0.08);
+}
+
+.memory-card.flipped,
+.memory-card.matched {
+    background: linear-gradient(135deg, #fff8fb, #ffe6f1);
+    border: 2px solid rgba(223, 129, 172, 0.85);
+}
+
+.calc-input,
+.calc-result,
+.calc-x-input {
+    width: 100%;
+    border: 1px solid rgba(241, 190, 213, 0.9);
+    border-radius: 14px;
+    background: #fffdfd;
+    padding: 12px 14px;
+    color: var(--text);
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.calc-result {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    background: #fff3f8;
+    color: var(--pink-dark);
+    font-weight: bold;
+}
+
+.calc-keypad {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.calc-keypad button {
+    border: none;
+    border-radius: 12px;
+    padding: 12px 8px;
+    background: #fff4f8;
+    color: var(--text);
+    font-weight: bold;
+    cursor: pointer;
 }
 
 /* ---------- Schedule ---------- */
@@ -1228,6 +1401,18 @@ footer::after {
             💗 Add Task
         </button>
 
+        <button onclick="showPage('focus', this)">
+            🧠 Focus
+        </button>
+
+        <button onclick="showPage('games', this)">
+            🎮 Games
+        </button>
+
+        <button onclick="showPage('calculator', this)">
+            🧮 Calc
+        </button>
+
         <button onclick="showPage('settings', this)">
             ⚙️ Settings
         </button>
@@ -1650,6 +1835,130 @@ footer::after {
 
 
     <!-- =====================================================
+         FOCUS
+         ===================================================== -->
+
+    <section id="focus" class="page">
+
+        <h2 class="section-title">
+            🧠 Focus Flow
+        </h2>
+
+        <div class="focus-grid">
+            <div class="focus-card">
+                <h3>Gentle reminder</h3>
+                <p id="focusReminderText">No urgent tasks right now. Keep your energy soft and steady.</p>
+                <div class="focus-actions">
+                    <button class="focus-btn" type="button" onclick="triggerGentleReminder()">✨ Check in</button>
+                    <button class="focus-btn" type="button" onclick="startFocusTimer(5)">⏳ 5 min reset</button>
+                </div>
+            </div>
+
+            <div class="focus-card">
+                <h3>Brain boost timer</h3>
+                <p>Use short calm intervals so you stay focused without burning out.</p>
+                <div class="focus-row">
+                    <button class="focus-btn" type="button" onclick="startFocusTimer(5)">5 min</button>
+                    <button class="focus-btn" type="button" onclick="startFocusTimer(10)">10 min</button>
+                    <button class="focus-btn" type="button" onclick="startFocusTimer(15)">15 min</button>
+                </div>
+                <div id="focusTimerDisplay" class="focus-timer">00:00</div>
+            </div>
+
+            <div class="focus-card">
+                <h3>Low-stress checklist</h3>
+                <p>Soft reset ideas to help your brain stay active without getting drained.</p>
+                <div class="focus-row">
+                    <span class="tag-mini">💧 water</span>
+                    <span class="tag-mini">🧘 breathe</span>
+                    <span class="tag-mini">🌿 stretch</span>
+                    <span class="tag-mini">☕ tiny break</span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         GAMES
+         ===================================================== -->
+
+    <section id="games" class="page">
+        <h2 class="section-title">
+            🎮 Mini Game Corner
+        </h2>
+
+        <div class="game-grid">
+            <div class="game-card">
+                <h3>Pink Memory Match</h3>
+                <p>Match the cute pairs and keep your brain awake without overdoing it.</p>
+                <div class="focus-row">
+                    <button class="game-btn" type="button" onclick="renderMemoryGame()">🔄 New Round</button>
+                    <span id="memoryScore" class="tag-mini">0 matched</span>
+                </div>
+                <div id="memoryGrid" class="memory-grid"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =====================================================
+         CALCULATOR
+         ===================================================== -->
+
+    <section id="calculator" class="page">
+        <h2 class="section-title">
+            🧮 Calculus Helper
+        </h2>
+
+        <div class="calc-grid">
+            <div class="calc-card">
+                <h3>Calculator</h3>
+                <input id="calcDisplay" class="calc-input" value="0" readonly>
+                <div class="calc-keypad">
+                    <button type="button" onclick="appendCalc('7')">7</button>
+                    <button type="button" onclick="appendCalc('8')">8</button>
+                    <button type="button" onclick="appendCalc('9')">9</button>
+                    <button type="button" onclick="appendCalc('/')">÷</button>
+                    <button type="button" onclick="appendCalc('4')">4</button>
+                    <button type="button" onclick="appendCalc('5')">5</button>
+                    <button type="button" onclick="appendCalc('6')">6</button>
+                    <button type="button" onclick="appendCalc('*')">×</button>
+                    <button type="button" onclick="appendCalc('1')">1</button>
+                    <button type="button" onclick="appendCalc('2')">2</button>
+                    <button type="button" onclick="appendCalc('3')">3</button>
+                    <button type="button" onclick="appendCalc('-')">−</button>
+                    <button type="button" onclick="appendCalc('0')">0</button>
+                    <button type="button" onclick="appendCalc('.')">.</button>
+                    <button type="button" onclick="clearCalc()">C</button>
+                    <button type="button" onclick="appendCalc('+')">+</button>
+                </div>
+                <div class="calc-actions" style="margin-top:12px;">
+                    <button class="calc-btn" type="button" onclick="evaluateBasicCalc()">=</button>
+                    <button class="calc-btn" type="button" onclick="calculateDerivative()">d/dx</button>
+                    <button class="calc-btn" type="button" onclick="calculateIntegral()">∫</button>
+                </div>
+            </div>
+
+            <div class="calc-card">
+                <h3>Calculus helper</h3>
+                <p>Polynomial expressions, for example: x^2 + 3*x + 5</p>
+                <input id="calcExpression" class="calc-input" value="x^2 + 3*x + 5" placeholder="x^2 + 3*x + 5">
+                <label for="calcXValue">Evaluate derivative at x</label>
+                <input id="calcXValue" class="calc-x-input" type="number" value="2" step="any">
+                <label for="calcLowerBound">Definite integral bounds</label>
+                <div class="focus-row">
+                    <input id="calcLowerBound" class="calc-x-input" type="number" value="0" step="any" aria-label="Lower integration bound">
+                    <input id="calcUpperBound" class="calc-x-input" type="number" value="2" step="any" aria-label="Upper integration bound">
+                </div>
+                <div id="calcResult" class="calc-result">Result: ready</div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =====================================================
          SETTINGS
          ===================================================== -->
 
@@ -1899,6 +2208,18 @@ function showPage(pageId, button) {
 
     if (pageId === "schedule") {
         renderSchedule();
+    }
+
+    if (pageId === "focus") {
+        renderFocus();
+    }
+
+    if (pageId === "games") {
+        renderMemoryGame();
+    }
+
+    if (pageId === "calculator") {
+        renderCalculator();
     }
 }
 
@@ -2800,29 +3121,54 @@ function renderTodaySchedule() {
    ========================================================= */
 
 const rewardIdeas = [
-    { icon: "☕", label: "Coffee break treat", requirement: 1 },
-    { icon: "📺", label: "Watch your comfort show", requirement: 2 },
-    { icon: "🎮", label: "Gaming session", requirement: 4 },
-    { icon: "🧴", label: "Self-care reward", requirement: 6 }
+    { id: 1, icon: "☕", label: "Coffee break treat", requirement: 1 },
+    { id: 2, icon: "📺", label: "Watch your comfort show", requirement: 2 },
+    { id: 3, icon: "🎮", label: "Gaming session", requirement: 4 },
+    { id: 4, icon: "🧴", label: "Self-care reward", requirement: 6 }
 ];
+
+function getClaimedRewards() {
+    try {
+        return JSON.parse(localStorage.getItem("hanniClaimedRewards") || "[]");
+    } catch {
+        return [];
+    }
+}
+
+function setClaimedRewards(rewards) {
+    localStorage.setItem("hanniClaimedRewards", JSON.stringify(rewards));
+}
 
 function renderMotivation() {
     const panel = document.getElementById("motivationPanel");
     if (!panel) return;
 
     const completed = tasks.filter(task => task.completed).length;
+    const claimedRewards = getClaimedRewards();
 
     const rewards = rewardIdeas.map(reward => {
         const unlocked = completed >= reward.requirement;
+        const claimed = claimedRewards.includes(reward.id);
+        const statusText = claimed
+            ? "Claimed ✓"
+            : unlocked
+                ? "Claim reward"
+                : `${completed}/${reward.requirement}`;
+
         return `
-            <div class="reward-item ${unlocked ? "reward-earned" : ""}">
+            <button
+                type="button"
+                class="reward-item ${unlocked ? "reward-earned" : ""} ${claimed ? "reward-claimed" : ""}"
+                data-reward-id="${reward.id}"
+                ${(!unlocked || claimed) ? "disabled" : ""}
+            >
                 <div class="reward-icon">${reward.icon}</div>
                 <div class="reward-meta">
                     <strong>${reward.label}</strong>
                     <small>${reward.requirement} completed task${reward.requirement > 1 ? "s" : ""} required</small>
                 </div>
-                <span class="reward-status">${unlocked ? "Unlocked ✓" : `${completed}/${reward.requirement}`}</span>
-            </div>
+                <span class="reward-status">${statusText}</span>
+            </button>
         `;
     }).join("");
 
@@ -2863,6 +3209,339 @@ function renderMotivation() {
             `).join("")}
         </div>
     `;
+
+    panel.querySelectorAll(".reward-item").forEach(button => {
+        button.addEventListener("click", () => {
+            const rewardId = Number(button.dataset.rewardId);
+            const reward = rewardIdeas.find(item => item.id === rewardId);
+            const rewardRequirement = reward ? reward.requirement : 0;
+            const rewardUnlocked = completed >= rewardRequirement;
+
+            if (!rewardUnlocked) {
+                toast("🎀 Finish more tasks to unlock this reward.");
+                return;
+            }
+
+            const claimed = getClaimedRewards();
+            if (claimed.includes(rewardId)) {
+                toast("🎀 Reward already claimed.");
+                return;
+            }
+
+            const updated = [...claimed, rewardId];
+            setClaimedRewards(updated);
+            toast(`🎀 Reward claimed: ${reward.label}!`);
+            renderMotivation();
+        });
+    });
+}
+
+
+/* =========================================================
+   FOCUS REMINDER + TIMER
+   ========================================================= */
+
+const focusTimerState = {
+    intervalId: null,
+    remainingSeconds: 0
+};
+
+function getUrgentTasks() {
+    return tasks
+        .filter(task => !task.completed)
+        .filter(task => task.date)
+        .sort((a, b) => taskDateTime(a) - taskDateTime(b));
+}
+
+function renderFocus() {
+    const reminderText = document.getElementById("focusReminderText");
+    if (!reminderText) return;
+
+    const pending = getUrgentTasks();
+
+    if (!pending.length) {
+        reminderText.textContent = "No urgent tasks right now. Keep your energy soft and steady.";
+        return;
+    }
+
+    const nextTask = pending[0];
+    const dueInMinutes = Math.max(1, Math.round((taskDateTime(nextTask) - Date.now()) / 60000));
+
+    reminderText.textContent = dueInMinutes <= 15
+        ? `Gentle reminder: ${nextTask.title} is close. Take a 5-minute stretch and then finish one tiny step.`
+        : `Gentle reminder: ${nextTask.title} is coming up soon. Give yourself a soft focus block instead of pushing too hard.`;
+
+    updateFocusTimerDisplay();
+}
+
+function triggerGentleReminder() {
+    const pending = getUrgentTasks();
+
+    if (!pending.length) {
+        toast("🎀 Nothing urgent right now — take a tiny reset and breathe.");
+        return;
+    }
+
+    const nextTask = pending[0];
+    const dueInMinutes = Math.max(1, Math.round((taskDateTime(nextTask) - Date.now()) / 60000));
+
+    toast(
+        dueInMinutes <= 15
+            ? `✨ ${nextTask.title} is almost due. Take 5 minutes to reset, then finish one small step.`
+            : `✨ ${nextTask.title} is coming soon. Try a calm 10-minute focus burst and keep your energy steady.`
+    );
+}
+
+function updateFocusTimerDisplay() {
+    const timerDisplay = document.getElementById("focusTimerDisplay");
+    if (!timerDisplay) return;
+
+    const minutes = Math.floor(focusTimerState.remainingSeconds / 60);
+    const seconds = focusTimerState.remainingSeconds % 60;
+    timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function startFocusTimer(minutes) {
+    if (focusTimerState.intervalId) {
+        clearInterval(focusTimerState.intervalId);
+    }
+
+    focusTimerState.remainingSeconds = minutes * 60;
+    updateFocusTimerDisplay();
+
+    focusTimerState.intervalId = setInterval(() => {
+        if (focusTimerState.remainingSeconds <= 0) {
+            clearInterval(focusTimerState.intervalId);
+            focusTimerState.intervalId = null;
+            toast("🎀 Reset complete. Your brain is ready for the next step.");
+            updateFocusTimerDisplay();
+            return;
+        }
+
+        focusTimerState.remainingSeconds -= 1;
+        updateFocusTimerDisplay();
+    }, 1000);
+}
+
+
+/* =========================================================
+   MEMORY GAME
+   ========================================================= */
+
+const memoryGameState = {
+    deck: [],
+    flippedCards: [],
+    matchedPairs: 0,
+    locked: false
+};
+
+function shuffle(list) {
+    const copy = [...list];
+
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+
+    return copy;
+}
+
+function renderMemoryGame() {
+    const grid = document.getElementById("memoryGrid");
+    const score = document.getElementById("memoryScore");
+
+    if (!grid) return;
+
+    const icons = ["🌷", "💗", "✨", "🎀", "📚", "☁️"];
+    const deck = shuffle([...icons, ...icons]);
+
+    memoryGameState.deck = deck;
+    memoryGameState.flippedCards = [];
+    memoryGameState.matchedPairs = 0;
+    memoryGameState.locked = false;
+
+    grid.innerHTML = deck.map((icon, index) => `
+        <button
+            class="memory-card"
+            type="button"
+            data-index="${index}"
+            data-icon="${icon}"
+            onclick="flipMemoryCard(this)"
+        >?</button>
+    `).join("");
+
+    if (score) score.textContent = "0 matched";
+}
+
+function flipMemoryCard(card) {
+    if (!card || memoryGameState.locked) return;
+    if (card.classList.contains("flipped") || card.classList.contains("matched")) return;
+
+    card.classList.add("flipped");
+    card.textContent = card.dataset.icon;
+    memoryGameState.flippedCards.push(card);
+
+    if (memoryGameState.flippedCards.length < 2) return;
+
+    memoryGameState.locked = true;
+    const [firstCard, secondCard] = memoryGameState.flippedCards;
+
+    if (firstCard.dataset.icon === secondCard.dataset.icon) {
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+        memoryGameState.matchedPairs += 1;
+
+        const score = document.getElementById("memoryScore");
+        if (score) score.textContent = `${memoryGameState.matchedPairs} matched`;
+
+        memoryGameState.flippedCards = [];
+        memoryGameState.locked = false;
+
+        if (memoryGameState.matchedPairs === 6) {
+            toast("🎀 You matched all the cute pairs! Your brain gets a tiny sparkle win.");
+        }
+
+        return;
+    }
+
+    setTimeout(() => {
+        firstCard.classList.remove("flipped");
+        secondCard.classList.remove("flipped");
+        firstCard.textContent = "?";
+        secondCard.textContent = "?";
+        memoryGameState.flippedCards = [];
+        memoryGameState.locked = false;
+    }, 700);
+}
+
+
+/* =========================================================
+   CALCULUS HELPER
+   ========================================================= */
+
+function parsePolynomial(expression) {
+    const normalized = expression.replace(/\s+/g, "").replace(/-/g, "+-");
+    const terms = normalized.split("+").filter(Boolean);
+    if (!terms.length) throw new Error("Empty polynomial");
+
+    const polynomial = new Map();
+
+    terms.forEach(term => {
+        const match = term.match(/^([+-]?)(?:(\d+(?:\.\d*)?|\.\d+)\*?)?(x(?:\^(\d+))?)?$/i);
+        if (!match || (!match[2] && !match[3])) throw new Error("Invalid polynomial term");
+
+        const sign = match[1] === "-" ? -1 : 1;
+        const hasX = Boolean(match[3]);
+        const coefficient = sign * (match[2] === undefined ? 1 : Number(match[2]));
+        const power = hasX ? Number(match[4] || 1) : 0;
+
+        polynomial.set(power, (polynomial.get(power) || 0) + coefficient);
+    });
+
+    return polynomial;
+}
+
+function formatPolynomial(polynomial) {
+    const terms = [...polynomial.entries()]
+        .filter(([, coefficient]) => Math.abs(coefficient) > 1e-10)
+        .sort(([powerA], [powerB]) => powerB - powerA)
+        .map(([power, coefficient], index) => {
+            const sign = coefficient < 0 ? "-" : "+";
+            const magnitude = Math.abs(coefficient);
+            const value = Number.isInteger(magnitude) ? String(magnitude) : String(Number(magnitude.toFixed(6)));
+            const body = power === 0
+                ? value
+                : `${magnitude === 1 ? "" : value}x${power === 1 ? "" : `^${power}`}`;
+
+            return `${index === 0 && sign === "+" ? "" : ` ${sign} `}${body}`;
+        });
+
+    return terms.join("") || "0";
+}
+
+function evaluatePolynomial(polynomial, xValue) {
+    return [...polynomial.entries()]
+        .reduce((sum, [power, coefficient]) => sum + coefficient * (xValue ** power), 0);
+}
+
+function calculateDerivative() {
+    const expression = document.getElementById("calcExpression").value.trim();
+    const xValue = Number(document.getElementById("calcXValue").value || 0);
+    const resultNode = document.getElementById("calcResult");
+
+    try {
+        const polynomial = parsePolynomial(expression);
+        const derivative = new Map();
+
+        polynomial.forEach((coefficient, power) => {
+            if (power > 0) derivative.set(power - 1, coefficient * power);
+        });
+
+        resultNode.textContent = `f'(x) = ${formatPolynomial(derivative)}; at x=${xValue}: ${evaluatePolynomial(derivative, xValue).toFixed(4)}`;
+    } catch (error) {
+        resultNode.textContent = "Use polynomial terms like x^3 - 2*x + 5 (whole-number powers).";
+    }
+}
+
+function calculateIntegral() {
+    const expression = document.getElementById("calcExpression").value.trim();
+    const lowerBound = Number(document.getElementById("calcLowerBound").value);
+    const upperBound = Number(document.getElementById("calcUpperBound").value);
+    const resultNode = document.getElementById("calcResult");
+
+    try {
+        if (!Number.isFinite(lowerBound) || !Number.isFinite(upperBound)) throw new Error("Invalid bounds");
+
+        const polynomial = parsePolynomial(expression);
+        const antiderivative = new Map();
+
+        polynomial.forEach((coefficient, power) => {
+            antiderivative.set(power + 1, coefficient / (power + 1));
+        });
+
+        const value = evaluatePolynomial(antiderivative, upperBound) - evaluatePolynomial(antiderivative, lowerBound);
+        resultNode.textContent = `F(x) = ${formatPolynomial(antiderivative)} + C; integral from ${lowerBound} to ${upperBound}: ${value.toFixed(4)}`;
+    } catch (error) {
+        resultNode.textContent = "Use polynomial terms like x^3 - 2*x + 5 and valid numeric bounds.";
+    }
+}
+
+function appendCalc(value) {
+    const display = document.getElementById("calcDisplay");
+    if (!display) return;
+
+    if (display.value === "0" && !["+", "-", "*", "/", "."].includes(value)) {
+        display.value = value;
+        return;
+    }
+
+    display.value += value;
+}
+
+function clearCalc() {
+    const display = document.getElementById("calcDisplay");
+    if (display) display.value = "0";
+}
+
+function evaluateBasicCalc() {
+    const display = document.getElementById("calcDisplay");
+    if (!display) return;
+
+    try {
+        const expression = display.value.replace(/÷/g, "/").replace(/×/g, "*");
+        const result = Function(`"use strict"; return (${expression})`)();
+        display.value = Number.isFinite(result) ? String(result) : "Error";
+    } catch (error) {
+        display.value = "Error";
+    }
+}
+
+function renderCalculator() {
+    const display = document.getElementById("calcDisplay");
+    if (display) display.value = "0";
+
+    const result = document.getElementById("calcResult");
+    if (result) result.textContent = "Result: ready";
 }
 
 
