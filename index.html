@@ -1,0 +1,3466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hanni's Pink Planner 🎀</title>
+
+<style>
+/* =========================================================
+   HANNA'S COQUETTE SCHOOL PLANNER
+   Everything is contained in this one HTML file.
+   ========================================================= */
+
+:root {
+    --pink-dark: #c85686;
+    --pink: #ee9bb9;
+    --pink-strong: #e66ea2;
+    --pink-light: #ffdfe9;
+    --pink-pale: #fff5f9;
+    --pink-soft: #ffe8f1;
+    --rose: #ffc8dc;
+    --blush: #fffafc;
+    --lavender: #f4e9ff;
+    --white: #ffffff;
+    --text: #6e455a;
+    --muted: #a07f8f;
+    --danger: #df5577;
+    --success: #62aa82;
+    --shadow: 0 18px 36px rgba(183, 98, 140, 0.12);
+    --shadow-soft: 0 10px 22px rgba(221, 118, 163, 0.10);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 15% 18%, rgba(255,255,255,0.95) 0 7px, transparent 8px),
+        radial-gradient(circle at 80% 24%, rgba(255,255,255,0.8) 0 6px, transparent 7px),
+        radial-gradient(circle at 30% 70%, rgba(255, 216, 233, 0.7) 0 10%, transparent 11%),
+        linear-gradient(135deg, #fffdfd 0%, #fff1f7 26%, #fef4fb 56%, #fff0f5 100%);
+    background-size: 90px 90px, 110px 110px, 100% 100%, cover;
+    min-height: 100vh;
+    letter-spacing: 0.1px;
+}
+
+/* ---------- Decorative bows ---------- */
+
+.bow {
+    position: fixed;
+    z-index: -1;
+    color: rgba(239, 120, 164, 0.15);
+    font-size: 100px;
+    pointer-events: none;
+    text-shadow: 0 0 18px rgba(255,255,255,0.6);
+    filter: drop-shadow(0 8px 10px rgba(198, 87, 137, 0.08));
+}
+
+.bow1 {
+    top: 60px;
+    left: 20px;
+    transform: rotate(-15deg);
+}
+
+.bow2 {
+    top: 430px;
+    right: 20px;
+    transform: rotate(12deg);
+}
+
+.bow3 {
+    bottom: 30px;
+    left: 40px;
+    transform: rotate(10deg);
+}
+
+/* ---------- Header ---------- */
+
+header {
+    background: linear-gradient(135deg, rgba(244,159,191,0.96), rgba(245,191,216,0.9), rgba(250,228,239,0.92));
+    color: white;
+    padding: 18px 25px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 10px 24px rgba(185, 61, 112, .14);
+    border-bottom: 2px solid rgba(255,255,255,0.5);
+    backdrop-filter: blur(8px);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 10px rgba(149, 66, 104, 0.18);
+}
+
+.logo small {
+    display: block;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: .95;
+    margin-top: 3px;
+}
+
+.clock {
+    text-align: right;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 18px;
+    padding: 8px 14px;
+    backdrop-filter: blur(4px);
+}
+
+#time {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#date {
+    font-size: 12px;
+    opacity: .95;
+}
+
+/* ---------- Layout ---------- */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px 18px 60px;
+}
+
+/* ---------- Navigation ---------- */
+
+.nav {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.nav button {
+    border: 1px solid rgba(232, 158, 184, 0.75);
+    background: rgba(255,255,255,0.75);
+    color: var(--pink-dark);
+    border-radius: 999px;
+    padding: 10px 17px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .2s ease;
+    box-shadow: 0 8px 18px rgba(220, 131, 175, 0.08);
+    backdrop-filter: blur(3px);
+}
+
+.nav button:hover,
+.nav button.active {
+    background: linear-gradient(135deg, #f09bbb, #f4bfd8);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(218, 74, 129, .18);
+    border-color: rgba(255,255,255,0.7);
+}
+
+/* ---------- Pages ---------- */
+
+.page {
+    display: none;
+    animation: fadeIn .3s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+    background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,244,248,0.96));
+    border: 1px solid rgba(248, 203, 220, 0.9);
+    border-radius: 34px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 22px;
+    isolation: isolate;
+}
+
+.hero::before {
+    content: "♡";
+    position: absolute;
+    left: 22px;
+    top: 18px;
+    font-size: 26px;
+    color: rgba(217, 79, 135, 0.22);
+}
+
+.hero::after {
+    content: "🎀";
+    position: absolute;
+    right: 25px;
+    top: 10px;
+    font-size: 80px;
+    opacity: .18;
+    transform: rotate(10deg);
+}
+
+.floating-hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    color: rgba(239, 122, 167, 0.12);
+    font-size: 26px;
+    animation: floatHeart 10s ease-in-out infinite;
+}
+
+.heart1 { top: 110px; left: 9%; }
+.heart2 { top: 210px; right: 12%; animation-delay: 1.5s; }
+.heart3 { top: 380px; left: 14%; animation-delay: 2.8s; }
+.heart4 { bottom: 190px; right: 16%; animation-delay: 4s; }
+.heart5 { bottom: 100px; left: 20%; animation-delay: 5s; }
+
+@keyframes floatHeart {
+    0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-12px) scale(1.15); opacity: 1; }
+}
+
+.hero-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.eyebrow {
+    display: inline-block;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, rgba(255,244,249,0.95), rgba(255,227,238,0.95));
+    border: 1px solid rgba(244, 186, 211, 0.9);
+    color: var(--pink-dark);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    box-shadow: 0 8px 16px rgba(221, 131, 175, 0.06);
+}
+
+.hero h1 {
+    margin: 0 0 8px;
+    color: var(--pink-dark);
+    font-family: Georgia, serif;
+    font-size: 34px;
+    letter-spacing: 0.4px;
+}
+
+.sparkle {
+    display: inline-block;
+    margin-left: 10px;
+    color: #f08bb6;
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+    50% { transform: scale(1.12) rotate(10deg); opacity: 1; }
+}
+
+.hero p {
+    margin: 5px 0;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.hero-badges {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(110px, 1fr));
+    gap: 12px;
+    min-width: 250px;
+}
+
+.mini-badge {
+    background: linear-gradient(180deg, #fffafc, #fff0f7);
+    border: 1px solid #f7d2e2;
+    border-radius: 18px;
+    box-shadow: 0 6px 16px rgba(222, 113, 163, 0.08);
+    padding: 14px 12px;
+    text-align: center;
+}
+
+.mini-badge span {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.mini-badge strong {
+    display: block;
+    color: var(--pink-dark);
+    font-size: 12px;
+    letter-spacing: .4px;
+}
+
+.mini-badge small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* ---------- Cards ---------- */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,248,251,0.92));
+    border: 1px solid rgba(245, 201, 220, 0.9);
+    border-radius: 26px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle, rgba(255, 194, 220, 0.45), transparent 65%);
+    pointer-events: none;
+}
+
+.card h3 {
+    margin-top: 0;
+    color: var(--pink-dark);
+}
+
+.moodboard {
+    background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,240,247,0.96));
+    border: 1px solid rgba(244, 195, 218, 0.9);
+    border-radius: 30px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+}
+
+.moodboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.moodboard-header h3 {
+    margin: 0;
+    color: var(--pink-dark);
+    font-family: Georgia, serif;
+    font-size: 26px;
+}
+
+.moodboard-header span {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.moodboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.mood-card {
+    background: linear-gradient(180deg, #fffdfd, #fff1f7);
+    border: 1px solid rgba(242, 191, 214, 0.9);
+    border-radius: 22px;
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: 0 8px 18px rgba(216, 125, 169, 0.06);
+}
+
+.mood-card span {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.mood-card h4 {
+    margin: 0 0 6px;
+    color: var(--pink-dark);
+    font-size: 15px;
+}
+
+.mood-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.stat {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--pink);
+}
+
+.small {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* ---------- Section title ---------- */
+
+.section-title {
+    margin: 25px 0 15px;
+    color: var(--pink-dark);
+    font-family: Georgia, serif;
+    font-size: 27px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(90deg, rgba(244, 142, 184, 0.25), rgba(255, 199, 220, 0.8), rgba(244, 142, 184, 0.25));
+    border-radius: 999px;
+    margin-top: 8px;
+}
+
+.quote-box {
+    margin: 18px 0 26px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,239,246,0.96));
+    border: 1px solid rgba(243, 196, 217, 0.9);
+    border-left: 5px solid #ee7aa9;
+    border-radius: 18px;
+    padding: 16px 18px;
+    color: var(--text);
+    box-shadow: 0 10px 20px rgba(221, 117, 166, 0.05);
+}
+
+.quote-box strong {
+    color: var(--pink-dark);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.quote-box p {
+    margin: 8px 0 0;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.motivation-panel {
+    margin: 22px 0 16px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,242,248,0.98));
+    border: 1px solid rgba(244, 196, 217, 0.9);
+    border-radius: 28px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+}
+
+.motivation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.motivation-header h3 {
+    margin: 0;
+    color: var(--pink-dark);
+    font-family: Georgia, serif;
+    font-size: 26px;
+}
+
+.motivation-header span {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.reward-list {
+    display: grid;
+    gap: 12px;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #fffdfd, #fff2f7);
+    border: 1px solid rgba(243, 193, 216, 0.85);
+}
+
+.reward-item.reward-earned {
+    background: linear-gradient(180deg, #fffdfd, #ffeaf4);
+    border-color: rgba(228, 141, 180, 0.9);
+}
+
+.reward-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ffe5f0, #f9dfe9);
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.reward-meta {
+    flex: 1;
+}
+
+.reward-meta strong {
+    display: block;
+    color: var(--pink-dark);
+    margin-bottom: 4px;
+}
+
+.reward-meta small {
+    color: var(--muted);
+}
+
+.reward-status {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    color: var(--pink-dark);
+    background: rgba(245, 187, 214, 0.16);
+    border-radius: 999px;
+    padding: 7px 10px;
+    white-space: nowrap;
+}
+
+.time-tips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.tip-box {
+    background: linear-gradient(180deg, #fffafd, #fff2f8);
+    border: 1px solid rgba(240, 186, 212, 0.8);
+    border-radius: 18px;
+    padding: 14px 15px;
+}
+
+.tip-box strong {
+    display: block;
+    color: var(--pink-dark);
+    margin-bottom: 6px;
+}
+
+.tip-box p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* ---------- Schedule ---------- */
+
+.schedule-list {
+    display: grid;
+    gap: 12px;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,242,247,0.96));
+    border: 1px solid rgba(246, 203, 222, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 8px 18px rgba(212, 109, 155, 0.04);
+}
+
+.schedule-time {
+    min-width: 105px;
+    font-weight: bold;
+    color: var(--pink-dark);
+}
+
+.schedule-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ee7ca9, #f8c3d6);
+    box-shadow: 0 0 0 5px #ffe1ec;
+}
+
+.current-class {
+    background: linear-gradient(135deg, #ffe6f0, #fff3f7);
+    border: 2px solid #f28bb2;
+}
+
+/* ---------- Task list ---------- */
+
+.task-list {
+    display: grid;
+    gap: 12px;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 17px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #ffffff, #fff8fb);
+    border: 1px solid rgba(244, 199, 216, 0.9);
+    box-shadow: 0 12px 22px rgba(213, 100, 143, .06);
+}
+
+.task-left {
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+}
+
+.task-icon {
+    font-size: 25px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(255,233,242,0.9), rgba(249,222,239,0.95));
+    box-shadow: inset 0 0 0 1px rgba(224, 135, 176, 0.18), 0 8px 18px rgba(236, 155, 185, 0.08);
+}
+
+.task h4 {
+    margin: 0 0 5px;
+    color: #75415a;
+}
+
+.task p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+.badge-project {
+    background: #ffe0ed;
+    color: #c44e7d;
+}
+
+.badge-exam {
+    background: #ffd5dd;
+    color: #c94d68;
+}
+
+.badge-deadline {
+    background: #eee1ff;
+    color: #895ab4;
+}
+
+.badge-done {
+    background: #dff5e8;
+    color: #4e9a6f;
+}
+
+.overdue {
+    border-color: #ee7894;
+    background: #fff3f5;
+}
+
+/* ---------- Forms ---------- */
+
+.form-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,243,248,0.96));
+    border: 2px solid #ffd1e2;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--pink-dark);
+    margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    border: 2px solid #f5c6d8;
+    border-radius: 14px;
+    padding: 11px 13px;
+    outline: none;
+    background: #fffafd;
+    color: var(--text);
+    font-family: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px #ffe1ec;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.btn {
+    border: 0;
+    background: linear-gradient(135deg, #ea7aa6, #f6afcb);
+    color: white;
+    padding: 11px 18px;
+    border-radius: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+    box-shadow: 0 12px 20px rgba(218, 74, 129, 0.14);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(212, 72, 127, .25);
+}
+
+.btn.secondary {
+    background: linear-gradient(135deg, #fff1f7, #f9dfe9);
+    color: var(--pink-dark);
+    border: 1px solid rgba(236, 182, 207, 0.8);
+}
+
+.btn.danger {
+    background: linear-gradient(135deg, #eb7194, #d94f87);
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+/* ---------- Progress ---------- */
+
+.progress-bar {
+    width: 100%;
+    height: 13px;
+    background: #ffe4ee;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ec70a0, #f8a8c6);
+    transition: width .5s;
+}
+
+/* ---------- Search ---------- */
+
+.search-box {
+    margin-bottom: 15px;
+}
+
+.calendar-shell {
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.calendar-header h3 {
+    margin: 0;
+    color: var(--pink-dark);
+    font-family: Georgia, serif;
+    font-size: 26px;
+}
+
+.month-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.month-nav button {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    border: 1px solid rgba(236, 182, 207, 0.9);
+    background: linear-gradient(180deg, #fffdfd, #fff0f6);
+    color: var(--pink-dark);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.calendar-weekdays,
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.calendar-weekdays {
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.calendar-weekdays div {
+    text-align: center;
+    padding: 8px 4px;
+}
+
+.calendar-cell {
+    min-height: 124px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,246,250,0.95));
+    border: 1px solid rgba(241, 196, 220, 0.92);
+    border-radius: 18px;
+    padding: 10px 8px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.calendar-cell:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(204, 98, 142, 0.08);
+}
+
+.calendar-cell.inactive {
+    opacity: 0.48;
+}
+
+.calendar-cell.selected {
+    border-color: #ec84ad;
+    box-shadow: inset 0 0 0 2px rgba(236, 132, 173, 0.22);
+    background: linear-gradient(180deg, #fffafc, #fff1f6);
+}
+
+.calendar-date {
+    font-weight: bold;
+    color: var(--pink-dark);
+    font-size: 14px;
+}
+
+.calendar-events {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: auto;
+}
+
+.calendar-pill {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    border-radius: 999px;
+    padding: 3px 7px;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.calendar-pill.deadline { background: #ffe1ee; color: #c7517a; }
+.calendar-pill.class { background: #e8ebff; color: #5e69c7; }
+.calendar-pill.holiday { background: #fff2c7; color: #a6751d; }
+
+.calendar-details {
+    margin-top: 18px;
+}
+
+.calendar-day-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.calendar-entry {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #fffdfd, #fff4f8);
+    border: 1px solid rgba(242, 191, 214, 0.9);
+}
+
+.calendar-entry-icon {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fff1f7, #f9dfe9);
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.calendar-entry strong {
+    color: var(--pink-dark);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.calendar-entry small {
+    color: var(--muted);
+    display: block;
+    line-height: 1.4;
+}
+
+.planner-toolbar {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-chip {
+    border: 1px solid rgba(236, 182, 207, 0.9);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--pink-dark);
+    padding: 8px 13px;
+    border-radius: 999px;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-chip:hover,
+.filter-chip.active {
+    background: linear-gradient(135deg, #ef8db0, #f7c4d8);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(216, 103, 149, 0.12);
+}
+
+.task-priority {
+    border-color: rgba(236, 150, 177, 0.9);
+    background: linear-gradient(135deg, rgba(255,255,255,1), rgba(255, 245, 250, 0.96));
+}
+
+.task-priority .task-icon {
+    background: linear-gradient(135deg, #ffe2ee, #f9d7e7);
+}
+
+/* ---------- Empty state ---------- */
+
+.empty {
+    text-align: center;
+    padding: 30px;
+    color: var(--muted);
+    background: #fff9fc;
+    border-radius: 18px;
+    border: 1px dashed #efb2ca;
+}
+
+/* ---------- Toast ---------- */
+
+#toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(135deg, #da5a9d, #f38db8);
+    color: white;
+    padding: 14px 19px;
+    border-radius: 18px;
+    box-shadow: 0 10px 22px rgba(165, 49, 96, .25);
+    display: none;
+    z-index: 9999;
+    border: 1px solid rgba(255,255,255,0.25);
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #b17b91;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    position: relative;
+}
+
+footer::before,
+footer::after {
+    content: "✦";
+    color: rgba(219, 92, 150, 0.35);
+    margin: 0 10px;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 800px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-badges {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .moodboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero h1 {
+        font-size: 27px;
+    }
+
+    .schedule-item {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .container {
+        padding: 15px 10px 40px;
+    }
+
+    .nav button {
+        flex: 1 1 40%;
+    }
+
+    .task {
+        flex-direction: column;
+    }
+
+    .hero {
+        padding: 22px 18px;
+    }
+
+    .hero-badges {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+    }
+
+    .moodboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="floating-hearts" aria-hidden="true">
+    <span class="heart heart1">♡</span>
+    <span class="heart heart2">♡</span>
+    <span class="heart heart3">♡</span>
+    <span class="heart heart4">♡</span>
+    <span class="heart heart5">♡</span>
+</div>
+
+<!-- Decorative bows -->
+<div class="bow bow1">🎀</div>
+<div class="bow bow2">🎀</div>
+<div class="bow bow3">🎀</div>
+
+<header>
+    <div class="header-inner">
+
+        <div class="logo">
+            🎀 Hanni's Planner
+            <small>MY LITTLE PINK SCHOOL WORLD</small>
+        </div>
+
+        <div class="clock">
+            <div id="time">--:--:--</div>
+            <div id="date">Loading date...</div>
+        </div>
+
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Navigation -->
+    <nav class="nav">
+
+        <button class="active" onclick="showPage('home', this)">
+            🏠 Home
+        </button>
+
+        <button onclick="showPage('schedule', this)">
+            📅 Schedule
+        </button>
+
+        <button onclick="showPage('planner', this)">
+            📝 My Planner
+        </button>
+
+        <button onclick="showPage('calendar', this)">
+            📆 Calendar
+        </button>
+
+        <button onclick="showPage('add', this)">
+            💗 Add Task
+        </button>
+
+        <button onclick="showPage('settings', this)">
+            ⚙️ Settings
+        </button>
+
+    </nav>
+
+
+    <!-- =====================================================
+         HOME
+         ===================================================== -->
+
+    <section id="home" class="page active">
+
+        <div class="hero">
+
+            <div class="hero-inner">
+
+                <div class="hero-text">
+                    <div class="eyebrow">sweet study diary</div>
+                    <h1>
+                        Hello, Hanni!
+                        <span class="sparkle">✦</span>
+                    </h1>
+
+                    <p>
+                        Welcome back to your little pink school world,
+                        <strong>Hannali Ledesma</strong> ♡
+                    </p>
+                </div>
+
+                <div class="hero-badges">
+                    <div class="mini-badge">
+                        <span>💗</span>
+                        <strong>Vibe</strong>
+                        <small>soft luxe</small>
+                    </div>
+                    <div class="mini-badge">
+                        <span>🎀</span>
+                        <strong>Focus</strong>
+                        <small>pretty productive</small>
+                    </div>
+                    <div class="mini-badge">
+                        <span>🌷</span>
+                        <strong>Today</strong>
+                        <small>fresh start</small>
+                    </div>
+                    <div class="mini-badge">
+                        <span>✨</span>
+                        <strong>Mood</strong>
+                        <small>glam & calm</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="moodboard">
+            <div class="moodboard-header">
+                <h3>💖 My Planner Moodboard</h3>
+                <span>today's aesthetic</span>
+            </div>
+
+            <div class="moodboard-grid">
+                <div class="mood-card">
+                    <span>🌸</span>
+                    <h4>Soft Start</h4>
+                    <p>Little wins, a calm routine, and a cute agenda.</p>
+                </div>
+                <div class="mood-card">
+                    <span>📚</span>
+                    <h4>Study Glow</h4>
+                    <p>Stay on track with your pretty little priorities.</p>
+                </div>
+                <div class="mood-card">
+                    <span>✨</span>
+                    <h4>Dream Notes</h4>
+                    <p>Write the goals that make your heart feel excited.</p>
+                </div>
+                <div class="mood-card">
+                    <span>🎀</span>
+                    <h4>Pink Power</h4>
+                    <p>Pretty productivity is still productivity.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-box">
+            <strong>Little reminder</strong>
+            <p>“You do not need to be perfect to be productive. You just need a soft plan, a little courage, and your pretty pink energy.”</p>
+        </div>
+
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>📚 Tasks</h3>
+                <div class="stat" id="totalTasks">0</div>
+                <div class="small">things in your planner</div>
+            </div>
+
+            <div class="card">
+                <h3>🎀 Completed</h3>
+                <div class="stat" id="completedTasks">0</div>
+                <div class="small">tasks finished</div>
+            </div>
+
+            <div class="card">
+                <h3>⏰ Upcoming</h3>
+                <div class="stat" id="upcomingTasks">0</div>
+                <div class="small">upcoming deadlines</div>
+            </div>
+
+        </div>
+
+
+        <h2 class="section-title">
+            🌷 Today's Classes
+        </h2>
+
+        <div class="quote-box">
+            <strong>Today’s vibe</strong>
+            <p>Classy, calm, and just a little bit dreamy. You’ve got this, Hanni.</p>
+        </div>
+
+        <div class="card">
+
+            <div id="todaySchedule" class="schedule-list"></div>
+
+        </div>
+
+
+        <h2 class="section-title">
+            💌 My Progress
+        </h2>
+
+        <div class="card">
+
+            <div>
+                <strong id="progressText">
+                    0% complete
+                </strong>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+
+        </div>
+
+        <div class="motivation-panel" id="motivationPanel"></div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CALENDAR
+         ===================================================== -->
+
+    <section id="calendar" class="page">
+
+        <h2 class="section-title">
+            📆 My Calendar
+        </h2>
+
+        <div class="card calendar-shell">
+            <div class="calendar-header">
+                <h3 id="calendarMonthLabel">Month</h3>
+                <div class="month-nav">
+                    <button type="button" onclick="changeCalendarMonth(-1)">←</button>
+                    <button type="button" onclick="changeCalendarMonth(1)">→</button>
+                </div>
+            </div>
+
+            <div class="calendar-weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+
+            <div id="calendarGrid" class="calendar-grid"></div>
+        </div>
+
+        <div id="calendarDetails" class="card calendar-details"></div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SCHEDULE
+         ===================================================== -->
+
+    <section id="schedule" class="page">
+
+        <h2 class="section-title">
+            📅 My Weekly Schedule
+        </h2>
+
+        <div class="form-card">
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Day</label>
+
+                    <select id="scheduleDay">
+                        <option>Monday</option>
+                        <option>Tuesday</option>
+                        <option>Wednesday</option>
+                        <option>Thursday</option>
+                        <option>Friday</option>
+                        <option>Saturday</option>
+                        <option>Sunday</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Subject</label>
+                    <input id="scheduleSubject" placeholder="e.g. Mathematics">
+                </div>
+
+                <div>
+                    <label>Start Time</label>
+                    <input id="scheduleStart" type="time">
+                </div>
+
+                <div>
+                    <label>End Time</label>
+                    <input id="scheduleEnd" type="time">
+                </div>
+
+                <div>
+                    <label>Room</label>
+                    <input id="scheduleRoom" placeholder="e.g. Room 204">
+                </div>
+
+                <div>
+                    <label>Teacher</label>
+                    <input id="scheduleTeacher" placeholder="e.g. Ms. Garcia">
+                </div>
+
+            </div>
+
+            <br>
+
+            <button class="btn" onclick="addSchedule()">
+                🎀 Add Class
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div id="scheduleList"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PLANNER
+         ===================================================== -->
+
+    <section id="planner" class="page">
+
+        <h2 class="section-title">
+            📝 My School Planner
+        </h2>
+
+        <div class="planner-toolbar">
+            <div class="search-box">
+                <input
+                    id="searchInput"
+                    placeholder="🔎 Search projects, exams, deadlines..."
+                    oninput="renderTasks()"
+                >
+            </div>
+
+            <div class="filter-row" id="taskFilters">
+                <button class="filter-chip active" data-filter="all" type="button">All</button>
+                <button class="filter-chip" data-filter="today" type="button">Due today</button>
+                <button class="filter-chip" data-filter="upcoming" type="button">Upcoming</button>
+                <button class="filter-chip" data-filter="overdue" type="button">Overdue</button>
+                <button class="filter-chip" data-filter="completed" type="button">Completed</button>
+            </div>
+        </div>
+
+        <div class="task-list" id="taskList"></div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ADD TASK
+         ===================================================== -->
+
+    <section id="add" class="page">
+
+        <h2 class="section-title">
+            💗 Add Something To My Planner
+        </h2>
+
+        <div class="form-card">
+
+            <div class="form-grid">
+
+                <div class="full">
+
+                    <label>What do you need to do?</label>
+
+                    <input
+                        id="taskTitle"
+                        placeholder="e.g. Finish my Science project"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Type</label>
+
+                    <select id="taskType">
+
+                        <option value="Project">
+                            📚 Project
+                        </option>
+
+                        <option value="Deadline">
+                            ⏰ Deadline
+                        </option>
+
+                        <option value="Exam">
+                            📝 Major Exam
+                        </option>
+
+                        <option value="Homework">
+                            📖 Homework
+                        </option>
+
+                        <option value="Other">
+                            💗 Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>Due Date</label>
+
+                    <input
+                        id="taskDate"
+                        type="date"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Due Time</label>
+
+                    <input
+                        id="taskTime"
+                        type="time"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Subject</label>
+
+                    <input
+                        id="taskSubject"
+                        placeholder="e.g. English"
+                    >
+
+                </div>
+
+
+                <div class="full">
+
+                    <label>Notes</label>
+
+                    <textarea
+                        id="taskNotes"
+                        placeholder="Add details, reminders, materials, etc..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+            <br>
+
+            <button class="btn" onclick="addTask()">
+                🎀 Save To My Planner
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SETTINGS
+         ===================================================== -->
+
+    <section id="settings" class="page">
+
+        <h2 class="section-title">
+            ⚙️ Planner Settings
+        </h2>
+
+
+        <div class="card">
+
+            <h3>💗 Hanni's Information</h3>
+
+            <p>
+                <strong>Name:</strong>
+                Hannali Ledesma
+            </p>
+
+            <p>
+                <strong>Nickname:</strong>
+                Hanni 🎀
+            </p>
+
+            <p class="small">
+                Your planner works locally on your device.
+                Your tasks and schedule are stored in your browser.
+            </p>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="card">
+
+            <h3>🔔 Reminders</h3>
+
+            <p class="small">
+                The planner can check for upcoming tasks while
+                the page is open.
+            </p>
+
+            <button class="btn" onclick="enableNotifications()">
+                🔔 Enable Reminders
+            </button>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="card">
+
+            <h3>💾 Data</h3>
+
+            <p class="small">
+                Your information is saved offline using your
+                browser's local storage.
+            </p>
+
+            <div class="action-buttons">
+
+                <button class="btn secondary" onclick="exportData()">
+                    💾 Backup My Planner
+                </button>
+
+                <button class="btn danger" onclick="clearEverything()">
+                    🗑️ Clear Everything
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<footer>
+    Made with love, pink bows & a little bit of productivity 🎀
+    <br>
+    Hanni's Personal School Planner ♡
+</footer>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   DATA
+   ========================================================= */
+
+function makeDateOffset(daysFromToday) {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + daysFromToday);
+    return d.toISOString().split("T")[0];
+}
+
+const defaultTasks = [
+    {
+        id: 1,
+        title: "Finish Literature reflection",
+        type: "Homework",
+        date: makeDateOffset(1),
+        time: "17:30",
+        subject: "English",
+        notes: "Write 2 paragraphs and review the poem annotations.",
+        completed: false,
+        created: new Date().toISOString()
+    },
+    {
+        id: 2,
+        title: "Chemistry lab report",
+        type: "Project",
+        date: makeDateOffset(2),
+        time: "15:00",
+        subject: "Chemistry",
+        notes: "Include observation table and conclusion summary.",
+        completed: false,
+        created: new Date().toISOString()
+    },
+    {
+        id: 3,
+        title: "Prepare for Math quiz",
+        type: "Exam",
+        date: makeDateOffset(4),
+        time: "09:15",
+        subject: "Mathematics",
+        notes: "Review algebraic expressions and graphing practice.",
+        completed: false,
+        created: new Date().toISOString()
+    }
+];
+
+const defaultSchedules = [
+    { id: 101, day: "Monday", subject: "NSTP 1", start: "07:00", end: "08:30", room: "Field", teacher: "Engr. R Rosales" },
+    { id: 102, day: "Monday", subject: "CHEM 1E", start: "08:30", end: "11:30", room: "3E4", teacher: "Engr. JP Jurada" },
+    { id: 103, day: "Monday", subject: "MATH 2E", start: "12:30", end: "14:00", room: "3E1", teacher: "Dr. W Marino" },
+    { id: 104, day: "Monday", subject: "STS", start: "14:00", end: "15:30", room: "2E5", teacher: "April (Part time)" },
+    { id: 105, day: "Wednesday", subject: "CPE 111", start: "17:00", end: "18:00", room: "3E1", teacher: "Engr. A Reyes" },
+    { id: 106, day: "Tuesday", subject: "ENG 1", start: "07:30", end: "09:00", room: "3E1", teacher: "ENG (Part Time)" },
+    { id: 107, day: "Tuesday", subject: "MATH 1", start: "09:00", end: "10:30", room: "2E5", teacher: "Dr. M Intia" },
+    { id: 108, day: "Tuesday", subject: "CPE 1", start: "10:30", end: "13:30", room: "CL2", teacher: "Engr. FJ Paz" },
+    { id: 109, day: "Tuesday", subject: "PATHFIT 1", start: "13:30", end: "15:30", room: "GYM", teacher: "PathFit (PartTime)" },
+    { id: 110, day: "Thursday", subject: "ENG 1", start: "07:30", end: "09:00", room: "3E1", teacher: "ENG (Part Time)" },
+    { id: 111, day: "Thursday", subject: "MATH 1", start: "09:00", end: "10:30", room: "2E5", teacher: "Dr. M Intia" },
+    { id: 112, day: "Thursday", subject: "CPE 1", start: "10:30", end: "13:30", room: "CL2", teacher: "Engr. FJ Paz" },
+    { id: 113, day: "Monday", subject: "CPE 111", start: "17:00", end: "18:00", room: "3E1", teacher: "Engr. A Reyes" }
+];
+
+let tasks = JSON.parse(
+    localStorage.getItem("hanniTasks") || "[]"
+);
+
+if (tasks.length === 0) {
+    tasks = defaultTasks;
+    localStorage.setItem("hanniTasks", JSON.stringify(tasks));
+}
+
+let schedules = defaultSchedules;
+localStorage.setItem("hanniSchedule", JSON.stringify(schedules));
+
+
+/* =========================================================
+   CLOCK
+   IMPORTANT:
+   Uses the computer/browser's actual LOCAL time.
+   No hard-coded timezone.
+   ========================================================= */
+
+function updateClock() {
+
+    const now = new Date();
+
+    let hours = now.getHours();
+
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+
+    const ampm = hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12;
+
+    if (hours === 0) {
+        hours = 12;
+    }
+
+    document.getElementById("time").textContent =
+        `${String(hours).padStart(2, "0")}:${minutes}:${seconds} ${ampm}`;
+
+
+    document.getElementById("date").textContent =
+        now.toLocaleDateString(undefined, {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+}
+
+updateClock();
+
+setInterval(updateClock, 1000);
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function showPage(pageId, button) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+
+    document.querySelectorAll(".nav button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+
+    if (pageId === "home") {
+        renderHome();
+    }
+
+    if (pageId === "planner") {
+        renderTasks();
+    }
+
+    if (pageId === "calendar") {
+        renderCalendar();
+    }
+
+    if (pageId === "schedule") {
+        renderSchedule();
+    }
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function toast(message) {
+
+    const box = document.getElementById("toast");
+
+    box.textContent = message;
+
+    box.style.display = "block";
+
+    setTimeout(() => {
+        box.style.display = "none";
+    }, 2800);
+}
+
+
+/* =========================================================
+   SAVE DATA
+   ========================================================= */
+
+function saveTasks() {
+
+    localStorage.setItem(
+        "hanniTasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+function saveSchedules() {
+
+    localStorage.setItem(
+        "hanniSchedule",
+        JSON.stringify(schedules)
+    );
+
+}
+
+
+/* =========================================================
+   TASKS
+   ========================================================= */
+
+function addTask() {
+
+    const title =
+        document.getElementById("taskTitle").value.trim();
+
+    const type =
+        document.getElementById("taskType").value;
+
+    const date =
+        document.getElementById("taskDate").value;
+
+    const time =
+        document.getElementById("taskTime").value;
+
+    const subject =
+        document.getElementById("taskSubject").value.trim();
+
+    const notes =
+        document.getElementById("taskNotes").value.trim();
+
+
+    if (!title || !date) {
+
+        toast("🎀 Please enter a task and due date!");
+
+        return;
+    }
+
+
+    const task = {
+
+        id: Date.now(),
+
+        title: title,
+
+        type: type,
+
+        date: date,
+
+        time: time,
+
+        subject: subject,
+
+        notes: notes,
+
+        completed: false,
+
+        created: new Date().toISOString()
+
+    };
+
+
+    tasks.push(task);
+
+    saveTasks();
+
+
+    document.getElementById("taskTitle").value = "";
+
+    document.getElementById("taskDate").value = "";
+
+    document.getElementById("taskTime").value = "";
+
+    document.getElementById("taskSubject").value = "";
+
+    document.getElementById("taskNotes").value = "";
+
+
+    toast("🎀 Added to your planner!");
+
+    renderTasks();
+
+    renderHome();
+}
+
+
+/* =========================================================
+   TASK ICON
+   ========================================================= */
+
+function taskIcon(type) {
+
+    if (type === "Project") return "📚";
+
+    if (type === "Exam") return "📝";
+
+    if (type === "Deadline") return "⏰";
+
+    if (type === "Homework") return "📖";
+
+    return "💗";
+}
+
+
+/* =========================================================
+   TASK BADGE
+   ========================================================= */
+
+function badgeClass(type) {
+
+    if (type === "Project") return "badge-project";
+
+    if (type === "Exam") return "badge-exam";
+
+    if (type === "Deadline") return "badge-deadline";
+
+    return "badge-project";
+}
+
+
+/* =========================================================
+   DATE HELPERS
+   ========================================================= */
+
+function taskDateTime(task) {
+
+    const time =
+        task.time || "23:59";
+
+    return new Date(
+        `${task.date}T${time}`
+    );
+
+}
+
+
+function isOverdue(task) {
+
+    if (task.completed) {
+        return false;
+    }
+
+    return taskDateTime(task) < new Date();
+
+}
+
+
+function formatDate(dateString) {
+
+    if (!dateString) return "";
+
+    const date = new Date(
+        dateString + "T00:00:00"
+    );
+
+    return date.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+    });
+
+}
+
+
+/* =========================================================
+   RENDER TASKS
+   ========================================================= */
+
+let activeTaskFilter = "all";
+
+function getTaskMatchesFilter(task) {
+    const now = new Date();
+    const today = now.toISOString().split("T")[0];
+
+    if (activeTaskFilter === "today") {
+        return task.date === today && !task.completed;
+    }
+
+    if (activeTaskFilter === "upcoming") {
+        return !task.completed && taskDateTime(task) >= now;
+    }
+
+    if (activeTaskFilter === "overdue") {
+        return !task.completed && isOverdue(task);
+    }
+
+    if (activeTaskFilter === "completed") {
+        return task.completed;
+    }
+
+    return true;
+}
+
+function bindTaskFilters() {
+    const filterButtons = document.querySelectorAll(".filter-chip");
+    if (!filterButtons.length) return;
+
+    filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            activeTaskFilter = button.dataset.filter;
+            filterButtons.forEach(btn => btn.classList.toggle("active", btn === button));
+            renderTasks();
+        });
+    });
+}
+
+function renderTasks() {
+
+    const list =
+        document.getElementById("taskList");
+
+    if (!list) return;
+
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+
+    let filtered = tasks.filter(task => {
+
+        const text = `
+            ${task.title}
+            ${task.type}
+            ${task.subject}
+            ${task.notes}
+        `.toLowerCase();
+
+        return text.includes(search) && getTaskMatchesFilter(task);
+
+    });
+
+
+    filtered.sort((a, b) => {
+
+        return taskDateTime(a) - taskDateTime(b);
+
+    });
+
+
+    if (filtered.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+                🎀 Nothing here yet!
+                <br><br>
+                Add a project, exam, deadline or homework
+                to start your pretty planner.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML = filtered.map(task => {
+
+        const overdue =
+            isOverdue(task);
+
+        const done =
+            task.completed;
+
+        const dueSoon =
+            !done &&
+            task.date &&
+            !overdue &&
+            taskDateTime(task) - new Date() <= 2 * 24 * 60 * 60 * 1000;
+
+        return `
+
+        <div class="task ${overdue ? "overdue" : ""} ${dueSoon ? "task-priority" : ""}">
+
+            <div class="task-left">
+
+                <div class="task-icon">
+                    ${taskIcon(task.type)}
+                </div>
+
+                <div>
+
+                    <h4>
+                        ${escapeHTML(task.title)}
+                    </h4>
+
+                    <p>
+                        ${task.subject
+                            ? escapeHTML(task.subject) + " • "
+                            : ""}
+                        Due ${formatDate(task.date)}
+                        ${task.time
+                            ? " at " + formatTime(task.time)
+                            : ""}
+                    </p>
+
+                    ${
+                        task.notes
+                        ? `<p style="margin-top:5px">
+                            ${escapeHTML(task.notes)}
+                           </p>`
+                        : ""
+                    }
+
+                    <span class="badge ${badgeClass(task.type)}">
+                        ${escapeHTML(task.type)}
+                    </span>
+
+                    ${
+                        done
+                        ? `<span class="badge badge-done">
+                            ✓ Completed
+                           </span>`
+                        : overdue
+                        ? `<span class="badge badge-exam">
+                            ⚠ Overdue
+                           </span>`
+                        : dueSoon
+                        ? `<span class="badge badge-project">
+                            ✨ Due soon
+                           </span>`
+                        : ""
+                    }
+
+                </div>
+
+            </div>
+
+
+            <div class="action-buttons">
+
+                <button
+                    class="btn secondary"
+                    onclick="toggleTask(${task.id})"
+                >
+                    ${done ? "↩️ Undo" : "✓ Done"}
+                </button>
+
+                <button
+                    class="btn danger"
+                    onclick="deleteTask(${task.id})"
+                >
+                    🗑️
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   COMPLETE TASK
+   ========================================================= */
+
+function toggleTask(id) {
+
+    const task =
+        tasks.find(t => t.id === id);
+
+    if (!task) return;
+
+    task.completed =
+        !task.completed;
+
+    saveTasks();
+
+    renderTasks();
+
+    renderHome();
+
+    toast(
+        task.completed
+        ? "🎀 Yay! Task completed!"
+        : "Task moved back to your planner."
+    );
+}
+
+
+/* =========================================================
+   DELETE TASK
+   ========================================================= */
+
+function deleteTask(id) {
+
+    const okay =
+        confirm(
+            "Delete this task from your planner? 🎀"
+        );
+
+    if (!okay) return;
+
+
+    tasks =
+        tasks.filter(task => task.id !== id);
+
+    saveTasks();
+
+    renderTasks();
+
+    renderHome();
+
+    toast("🗑️ Task deleted.");
+}
+
+
+/* =========================================================
+   SCHEDULE
+   ========================================================= */
+
+function addSchedule() {
+
+    const day =
+        document.getElementById("scheduleDay").value;
+
+    const subject =
+        document.getElementById("scheduleSubject").value.trim();
+
+    const start =
+        document.getElementById("scheduleStart").value;
+
+    const end =
+        document.getElementById("scheduleEnd").value;
+
+    const room =
+        document.getElementById("scheduleRoom").value.trim();
+
+    const teacher =
+        document.getElementById("scheduleTeacher").value.trim();
+
+
+    if (!subject || !start || !end) {
+
+        toast(
+            "🎀 Please enter the subject and class time!"
+        );
+
+        return;
+    }
+
+
+    schedules.push({
+
+        id: Date.now(),
+
+        day,
+
+        subject,
+
+        start,
+
+        end,
+
+        room,
+
+        teacher
+
+    });
+
+
+    saveSchedules();
+
+
+    document.getElementById("scheduleSubject").value = "";
+
+    document.getElementById("scheduleStart").value = "";
+
+    document.getElementById("scheduleEnd").value = "";
+
+    document.getElementById("scheduleRoom").value = "";
+
+    document.getElementById("scheduleTeacher").value = "";
+
+
+    renderSchedule();
+
+    renderHome();
+
+    toast("🎀 Class added!");
+}
+
+
+/* =========================================================
+   SCHEDULE ORDER
+   ========================================================= */
+
+const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+];
+
+
+function renderSchedule() {
+
+    const list =
+        document.getElementById("scheduleList");
+
+    if (!list) return;
+
+
+    if (schedules.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+                🎀 Your schedule is empty.
+                <br><br>
+                Add your classes above!
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML =
+        days.map(day => {
+
+            const classes =
+                schedules
+                .filter(item => item.day === day)
+                .sort((a,b) =>
+                    a.start.localeCompare(b.start)
+                );
+
+
+            if (classes.length === 0) {
+                return "";
+            }
+
+
+            return `
+
+            <div style="margin-bottom:25px">
+
+                <h3 style="color:#d94f87">
+                    🎀 ${day}
+                </h3>
+
+                <div class="schedule-list">
+
+                    ${classes.map(item => {
+                        const status = getClassStatus(item);
+                        const badgeClass =
+                            status.state === "live"
+                                ? "badge-done"
+                                : status.state === "upcoming"
+                                ? "badge-project"
+                                : "badge-exam";
+
+                        return `
+                            <div class="schedule-item">
+
+                                <div class="schedule-time">
+
+                                    ${formatTime(item.start)}
+                                    -
+                                    ${formatTime(item.end)}
+
+                                </div>
+
+                                <div class="schedule-dot"></div>
+
+                                <div style="flex:1">
+
+                                    <strong>
+                                        ${escapeHTML(item.subject)}
+                                    </strong>
+
+                                    <div class="small">
+
+                                        ${
+                                            item.teacher
+                                            ? "👩‍🏫 " +
+                                              escapeHTML(item.teacher)
+                                            : ""
+                                        }
+
+                                        ${
+                                            item.room
+                                            ? " • 🏫 " +
+                                              escapeHTML(item.room)
+                                            : ""
+                                        }
+
+                                    </div>
+
+                                    <div style="margin-top:7px;">
+                                        <span class="badge ${badgeClass}">
+                                            ${status.label}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <button
+                                    class="btn danger"
+                                    onclick="deleteSchedule(${item.id})"
+                                >
+                                    🗑️
+                                </button>
+
+                            </div>
+                        `;
+                    }).join("")}
+
+                </div>
+
+            </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   DELETE CLASS
+   ========================================================= */
+
+function deleteSchedule(id) {
+
+    if (!confirm("Remove this class? 🎀")) {
+        return;
+    }
+
+    schedules =
+        schedules.filter(
+            item => item.id !== id
+        );
+
+    saveSchedules();
+
+    renderSchedule();
+
+    renderHome();
+
+    toast("🗑️ Class removed.");
+}
+
+
+/* =========================================================
+   TODAY'S SCHEDULE
+   ========================================================= */
+
+function getMinutesUntilClass(startTime, dayName) {
+    const now = new Date();
+    const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' });
+    const dayOrder = days.indexOf(dayName);
+    const currentDayOrder = days.indexOf(currentDay);
+
+    let targetDate = new Date(now);
+    targetDate.setHours(0, 0, 0, 0);
+
+    if (dayOrder === currentDayOrder) {
+        targetDate.setDate(targetDate.getDate());
+    } else {
+        const diff = (dayOrder - currentDayOrder + 7) % 7;
+        targetDate.setDate(targetDate.getDate() + (diff === 0 ? 7 : diff));
+    }
+
+    const [hour, minute] = startTime.split(":").map(Number);
+    targetDate.setHours(hour, minute, 0, 0);
+
+    return Math.max(0, Math.round((targetDate - now) / 60000));
+}
+
+function getClassStatus(item) {
+    const now = new Date();
+    const today = now.toLocaleDateString("en-US", { weekday: "long" });
+    const startMinutes = timeToMinutes(item.start);
+    const endMinutes = timeToMinutes(item.end);
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+    if (item.day !== today) {
+        const minutesUntil = getMinutesUntilClass(item.start, item.day);
+        return {
+            state: minutesUntil <= 0 ? "upcoming" : "upcoming",
+            label: minutesUntil <= 0 ? "Starts soon" : `Starts in ${formatDuration(minutesUntil)}`,
+            timeText: `Starts at ${formatTime(item.start)}`,
+            minutesUntil
+        };
+    }
+
+    if (currentMinutes < startMinutes) {
+        const minutesUntil = startMinutes - currentMinutes;
+        return {
+            state: "upcoming",
+            label: `Starts in ${formatDuration(minutesUntil)}`,
+            timeText: `Starts at ${formatTime(item.start)}`,
+            minutesUntil
+        };
+    }
+
+    if (currentMinutes >= startMinutes && currentMinutes <= endMinutes) {
+        const minutesLeft = endMinutes - currentMinutes;
+        return {
+            state: "live",
+            label: `Live now • ${formatDuration(minutesLeft)} left`,
+            timeText: `Ends at ${formatTime(item.end)}`,
+            minutesLeft
+        };
+    }
+
+    return {
+        state: "done",
+        label: "Finished",
+        timeText: `Finished at ${formatTime(item.end)}`,
+        minutesUntil: 0
+    };
+}
+
+function formatDuration(totalMinutes) {
+    if (totalMinutes <= 0) return "now";
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    if (hours > 0) {
+        return `${hours}h ${minutes}m`;
+    }
+
+    return `${minutes}m`;
+}
+
+function renderTodaySchedule() {
+
+    const box =
+        document.getElementById("todaySchedule");
+
+    if (!box) return;
+
+
+    const today =
+        new Date().toLocaleDateString(
+            "en-US",
+            { weekday: "long" }
+        );
+
+
+    const classes =
+        schedules
+        .filter(item => item.day === today)
+        .sort((a,b) =>
+            a.start.localeCompare(b.start)
+        );
+
+
+    if (classes.length === 0) {
+
+        box.innerHTML = `
+            <div class="empty">
+                🌸 No classes scheduled for today.
+                <br>
+                Enjoy your day, Hanni! 🎀
+            </div>
+        `;
+
+        return;
+    }
+
+
+    box.innerHTML =
+        classes.map(item => {
+
+            const status = getClassStatus(item);
+            const start =
+                timeToMinutes(item.start);
+
+            const end =
+                timeToMinutes(item.end);
+
+            const currentMinutes =
+                new Date().getHours() * 60 +
+                new Date().getMinutes();
+
+            const current =
+                currentMinutes >= start &&
+                currentMinutes <= end;
+
+            const statusClass =
+                status.state === "live"
+                    ? "badge-done"
+                    : status.state === "upcoming"
+                    ? "badge-project"
+                    : "badge-exam";
+
+            return `
+
+            <div class="schedule-item
+                ${current ? "current-class" : ""}">
+
+                <div class="schedule-time">
+
+                    ${formatTime(item.start)}
+                    -
+                    ${formatTime(item.end)}
+
+                </div>
+
+                <div class="schedule-dot"></div>
+
+                <div style="flex:1">
+
+                    <strong>
+                        ${escapeHTML(item.subject)}
+                    </strong>
+
+                    <div class="small">
+
+                        ${
+                            item.room
+                            ? "🏫 " +
+                              escapeHTML(item.room)
+                            : ""
+                        }
+
+                        ${
+                            item.teacher
+                            ? " • 👩‍🏫 " +
+                              escapeHTML(item.teacher)
+                            : ""
+                        }
+
+                    </div>
+
+                    <div style="margin-top:8px;">
+                        <span class="badge ${statusClass}">
+                            ${status.label}
+                        </span>
+                    </div>
+
+                    <div class="small" style="margin-top:6px; color: var(--muted);">
+                        ${status.timeText}
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   MOTIVATION & REWARDS
+   ========================================================= */
+
+const rewardIdeas = [
+    { icon: "☕", label: "Coffee break treat", requirement: 1 },
+    { icon: "📺", label: "Watch your comfort show", requirement: 2 },
+    { icon: "🎮", label: "Gaming session", requirement: 4 },
+    { icon: "🧴", label: "Self-care reward", requirement: 6 }
+];
+
+function renderMotivation() {
+    const panel = document.getElementById("motivationPanel");
+    if (!panel) return;
+
+    const completed = tasks.filter(task => task.completed).length;
+
+    const rewards = rewardIdeas.map(reward => {
+        const unlocked = completed >= reward.requirement;
+        return `
+            <div class="reward-item ${unlocked ? "reward-earned" : ""}">
+                <div class="reward-icon">${reward.icon}</div>
+                <div class="reward-meta">
+                    <strong>${reward.label}</strong>
+                    <small>${reward.requirement} completed task${reward.requirement > 1 ? "s" : ""} required</small>
+                </div>
+                <span class="reward-status">${unlocked ? "Unlocked ✓" : `${completed}/${reward.requirement}`}</span>
+            </div>
+        `;
+    }).join("");
+
+    const message = completed === 0
+        ? "Start with one tiny win today. One class, one task, one step forward."
+        : completed >= 3
+        ? "You are building strong momentum. Keep going—you’re doing amazing."
+        : "You’re on track. Keep the streak alive and give yourself a little reward after finishing.";
+
+    const tips = [
+        { title: "Time block", text: "Use 50 minutes of deep work, then take a 10-minute reset." },
+        { title: "Priority rule", text: "Do the hardest subject first when your brain is fresh." },
+        { title: "Reward system", text: "After every 2 completed tasks, give yourself a small treat or break." },
+        { title: "Daily focus", text: "Aim for 3 important tasks max, not 10 tiny ones that overwhelm you." }
+    ];
+
+    panel.innerHTML = `
+        <div class="motivation-header">
+            <h3>💖 Motivation & Rewards</h3>
+            <span>engineer mindset</span>
+        </div>
+
+        <div class="quote-box" style="margin-top:0; margin-bottom:16px;">
+            <strong>Study mantra</strong>
+            <p>${message}</p>
+        </div>
+
+        <div class="reward-list">
+            ${rewards}
+        </div>
+
+        <div class="time-tips">
+            ${tips.map(tip => `
+                <div class="tip-box">
+                    <strong>${tip.title}</strong>
+                    <p>${tip.text}</p>
+                </div>
+            `).join("")}
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   HOME
+   ========================================================= */
+
+function renderHome() {
+
+    document.getElementById("totalTasks").textContent =
+        tasks.length;
+
+
+    const completed =
+        tasks.filter(task => task.completed).length;
+
+
+    document.getElementById("completedTasks").textContent =
+        completed;
+
+
+    const upcoming =
+        tasks.filter(task =>
+            !task.completed &&
+            !isOverdue(task)
+        ).length;
+
+
+    document.getElementById("upcomingTasks").textContent =
+        upcoming;
+
+
+    let percentage = 0;
+
+    if (tasks.length > 0) {
+
+        percentage =
+            Math.round(
+                (completed / tasks.length) * 100
+            );
+
+    }
+
+
+    document.getElementById("progressText").textContent =
+        percentage + "% complete";
+
+
+    document.getElementById("progressBar").style.width =
+        percentage + "%";
+
+
+    renderMotivation();
+    renderTodaySchedule();
+
+}
+
+
+/* =========================================================
+   TIME FUNCTIONS
+   ========================================================= */
+
+function formatTime(time) {
+
+    if (!time) return "";
+
+    const parts =
+        time.split(":");
+
+    let hour =
+        parseInt(parts[0]);
+
+    const minute =
+        parts[1];
+
+    const ampm =
+        hour >= 12 ? "PM" : "AM";
+
+    hour =
+        hour % 12;
+
+    if (hour === 0) {
+        hour = 12;
+    }
+
+    return `${hour}:${minute} ${ampm}`;
+}
+
+
+function timeToMinutes(time) {
+
+    const parts =
+        time.split(":");
+
+    return (
+        parseInt(parts[0]) * 60 +
+        parseInt(parts[1])
+    );
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+function enableNotifications() {
+
+    if (!("Notification" in window)) {
+
+        toast(
+            "Your browser does not support notifications."
+        );
+
+        return;
+    }
+
+
+    Notification.requestPermission()
+        .then(permission => {
+
+            if (permission === "granted") {
+
+                toast(
+                    "🔔 Reminders are enabled!"
+                );
+
+            } else {
+
+                toast(
+                    "Notifications were not enabled."
+                );
+
+            }
+
+        });
+
+}
+
+
+/* =========================================================
+   REMINDER CHECKER
+   ========================================================= */
+
+let remindedTasks = {};
+let remindedClasses = {};
+
+function checkClassReminders() {
+    const now = new Date();
+    const today = now.toLocaleDateString("en-US", { weekday: "long" });
+
+    schedules.forEach(item => {
+        if (item.day !== today) return;
+
+        const startDate = new Date();
+        const [hour, minute] = item.start.split(":").map(Number);
+        startDate.setHours(hour, minute, 0, 0);
+
+        const diff = startDate - now;
+
+        if (diff > 0 && diff <= 15 * 60 * 1000 && !remindedClasses[item.id]) {
+            remindedClasses[item.id] = true;
+            toast(`🎀 Class starting soon: ${item.subject} at ${formatTime(item.start)}`);
+
+            if ("Notification" in window && Notification.permission === "granted") {
+                new Notification("🎀 Class reminder", {
+                    body: `${item.subject} starts at ${formatTime(item.start)}.`
+                });
+            }
+        }
+    });
+}
+
+
+function checkReminders() {
+
+    const now =
+        new Date();
+
+
+    tasks.forEach(task => {
+
+        if (task.completed) return;
+
+        if (!task.date || !task.time) return;
+
+
+        const due =
+            taskDateTime(task);
+
+
+        const difference =
+            due - now;
+
+
+        /*
+           Reminder window:
+           between 0 and 30 minutes before deadline.
+        */
+
+        if (
+            difference > 0 &&
+            difference <= 30 * 60 * 1000
+        ) {
+
+            if (
+                !remindedTasks[task.id]
+            ) {
+
+                remindedTasks[task.id] = true;
+
+
+                toast(
+                    "⏰ Reminder: " +
+                    task.title
+                );
+
+
+                if (
+                    "Notification" in window &&
+                    Notification.permission === "granted"
+                ) {
+
+                    new Notification(
+                        "🎀 Hanni's Planner",
+                        {
+                            body:
+                                "Coming up soon: " +
+                                task.title
+                        }
+                    );
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+
+setInterval(
+    checkReminders,
+    60000
+);
+
+setInterval(
+    checkClassReminders,
+    60000
+);
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(text) {
+
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   CALENDAR VIEW
+   ========================================================= */
+
+const calendarBaseDate = new Date();
+let calendarViewDate = new Date(calendarBaseDate.getFullYear(), calendarBaseDate.getMonth(), 1);
+let calendarSelectedDate = new Date(calendarBaseDate.getFullYear(), calendarBaseDate.getMonth(), calendarBaseDate.getDate());
+
+const holidayTemplates = [
+    { label: "School holiday", monthOffset: 0, day: 12, type: "holiday" },
+    { label: "Family day", monthOffset: 0, day: 18, type: "holiday" },
+    { label: "Midterm week", monthOffset: 0, day: 23, type: "holiday" },
+    { label: "Project fair", monthOffset: 0, day: 28, type: "event" }
+];
+
+function getDateKey(date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate()).toISOString().split("T")[0];
+}
+
+function getWeekdayName(date) {
+    return date.toLocaleDateString("en-US", { weekday: "long" });
+}
+
+function getCalendarHolidayEntries(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    return holidayTemplates
+        .filter(item => {
+            const holidayDate = new Date(year, month + item.monthOffset, item.day);
+            return holidayDate.getFullYear() === year &&
+                holidayDate.getMonth() === month &&
+                holidayDate.getDate() === day;
+        })
+        .map(item => ({
+            type: item.type,
+            label: item.label,
+            icon: item.type === "holiday" ? "🎉" : "✨",
+            summary: item.label
+        }));
+}
+
+function getCalendarEntriesForDate(date) {
+    const key = getDateKey(date);
+    const weekday = getWeekdayName(date);
+
+    const entries = [];
+
+    tasks.filter(task => task.date === key).forEach(task => {
+        entries.push({
+            type: "deadline",
+            icon: "📌",
+            label: task.title,
+            summary: `${task.type || "Task"}${task.subject ? " • " + task.subject : ""}`
+        });
+    });
+
+    schedules.filter(item => item.day === weekday).forEach(item => {
+        entries.push({
+            type: "class",
+            icon: "🏫",
+            label: item.subject,
+            summary: `${formatTime(item.start)} - ${formatTime(item.end)}${item.room ? " • " + item.room : ""}`
+        });
+    });
+
+    getCalendarHolidayEntries(date).forEach(item => {
+        entries.push({
+            type: item.type === "holiday" ? "holiday" : "holiday",
+            icon: item.icon,
+            label: item.label,
+            summary: item.summary
+        });
+    });
+
+    return entries;
+}
+
+function formatCalendarMonth(date) {
+    return date.toLocaleDateString(undefined, {
+        month: "long",
+        year: "numeric"
+    });
+}
+
+function renderCalendarDetails() {
+    const container = document.getElementById("calendarDetails");
+    if (!container) return;
+
+    const entries = getCalendarEntriesForDate(calendarSelectedDate);
+
+    const dayLabel = calendarSelectedDate.toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+    });
+
+    if (entries.length === 0) {
+        container.innerHTML = `
+            <h3 style="margin-top:0; color: var(--pink-dark);">📅 ${dayLabel}</h3>
+            <div class="empty" style="margin-top: 10px;">
+                No tasks, classes, or holiday plans for this day.
+                <br><br>
+                You can add something to your planner and it will show up here.
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = `
+        <h3 style="margin-top:0; color: var(--pink-dark);">📅 ${dayLabel}</h3>
+        <div class="calendar-day-list">
+            ${entries.map(entry => `
+                <div class="calendar-entry">
+                    <div class="calendar-entry-icon">${entry.icon}</div>
+                    <div>
+                        <strong>${escapeHTML(entry.label)}</strong>
+                        <small>${escapeHTML(entry.summary)}</small>
+                    </div>
+                </div>
+            `).join("")}
+        </div>
+    `;
+}
+
+function renderCalendar() {
+    const grid = document.getElementById("calendarGrid");
+    const monthLabel = document.getElementById("calendarMonthLabel");
+
+    if (!grid || !monthLabel) return;
+
+    monthLabel.textContent = formatCalendarMonth(calendarViewDate);
+
+    const year = calendarViewDate.getFullYear();
+    const month = calendarViewDate.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const startOffset = firstDay.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+    const cells = [];
+
+    for (let i = 0; i < startOffset; i++) {
+        const dayNumber = daysInPrevMonth - startOffset + i + 1;
+        const date = new Date(year, month - 1, dayNumber);
+        cells.push(`
+            <div class="calendar-cell inactive" data-date="${getDateKey(date)}">
+                <div class="calendar-date">${dayNumber}</div>
+            </div>
+        `);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const dateKey = getDateKey(date);
+        const entries = getCalendarEntriesForDate(date);
+        const isSelected = getDateKey(calendarSelectedDate) === dateKey;
+        const preview = entries.slice(0, 3);
+
+        cells.push(`
+            <div class="calendar-cell ${isSelected ? "selected" : ""} ${entries.length ? "has-events" : ""}" data-date="${dateKey}">
+                <div class="calendar-date">${day}</div>
+                <div class="calendar-events">
+                    ${preview.map(entry => `
+                        <span class="calendar-pill ${entry.type}">${entry.label}</span>
+                    `).join("")}
+                </div>
+            </div>
+        `);
+    }
+
+    const totalCells = cells.length;
+    const trailingCount = (7 - (totalCells % 7)) % 7;
+
+    for (let i = 1; i <= trailingCount; i++) {
+        const date = new Date(year, month + 1, i);
+        cells.push(`
+            <div class="calendar-cell inactive" data-date="${getDateKey(date)}">
+                <div class="calendar-date">${i}</div>
+            </div>
+        `);
+    }
+
+    grid.innerHTML = cells.join("");
+
+    grid.querySelectorAll(".calendar-cell").forEach(cell => {
+        cell.addEventListener("click", () => {
+            calendarSelectedDate = new Date(cell.dataset.date + "T00:00:00");
+            renderCalendar();
+            renderCalendarDetails();
+        });
+    });
+
+    renderCalendarDetails();
+}
+
+function changeCalendarMonth(offset) {
+    calendarViewDate = new Date(
+        calendarViewDate.getFullYear(),
+        calendarViewDate.getMonth() + offset,
+        1
+    );
+
+    const currentMonth = calendarViewDate.getMonth();
+    const currentYear = calendarViewDate.getFullYear();
+    const currentDay = calendarSelectedDate.getDate();
+    calendarSelectedDate = new Date(currentYear, currentMonth, Math.min(currentDay, new Date(currentYear, currentMonth + 1, 0).getDate()));
+    renderCalendar();
+}
+
+
+/* =========================================================
+   EXPORT BACKUP
+   ========================================================= */
+
+function exportData() {
+
+    const data = {
+
+        name:
+            "Hannali Ledesma",
+
+        nickname:
+            "Hanni",
+
+        tasks,
+
+        schedules,
+
+        exported:
+            new Date().toISOString()
+
+    };
+
+
+    const blob =
+        new Blob(
+            [JSON.stringify(data, null, 2)],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+        "Hanni-Planner-Backup.json";
+
+    a.click();
+
+
+    URL.revokeObjectURL(url);
+
+
+    toast(
+        "💾 Planner backup downloaded!"
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR EVERYTHING
+   ========================================================= */
+
+function clearEverything() {
+
+    const okay =
+        confirm(
+            "Are you REALLY sure? This will delete your classes and tasks. 🎀"
+        );
+
+
+    if (!okay) return;
+
+
+    tasks = [];
+
+    schedules = [];
+
+    localStorage.removeItem("hanniTasks");
+
+    localStorage.removeItem("hanniSchedule");
+
+
+    renderTasks();
+
+    renderSchedule();
+
+    renderHome();
+
+
+    toast(
+        "Everything has been cleared."
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+renderHome();
+
+bindTaskFilters();
+renderTasks();
+renderCalendar();
+renderSchedule();
+
+/*
+   Refresh the "current class" display every minute
+   so the dashboard stays live.
+*/
+
+setInterval(
+    renderHome,
+    60000
+);
+
+</script>
+
+</body>
+</html>
